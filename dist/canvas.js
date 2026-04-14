@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log("Height: " + window.innerHeight);
     const ctx = canvas.getContext("2d");
     const dvd = new Image();
-    dvd.src = "/dvd-logo.svg";
+    dvd.src = "/public/dvd-logo.svg";
     dvd.onload = () => {
         function animation(timeStamp) {
             console.log(hue);
