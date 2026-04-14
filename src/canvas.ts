@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
   const dvd = new Image();
-  dvd.src = "public/dvd-logo.svg";
+  dvd.src = "/dvd-logo.svg";
 
   dvd.onload = () => {
     function animation(timeStamp: number) {
