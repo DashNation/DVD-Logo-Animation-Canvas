@@ -1,11 +1,13 @@
 window.addEventListener("DOMContentLoaded", () => {
     //Variables that are important
-    let dvdSubtract = 6;
+    let dvdSubtract = 5;
     let oldTimeStamp = 0;
     let dx = 0;
     let dy = 0;
-    let speedX = 0.2;
-    let speedY = 0.2;
+    let speedAmt = 0.2;
+    let speedX = speedAmt;
+    let speedY = speedAmt;
+    let hue = 0;
     const canvas = document.getElementById("canvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -13,9 +15,10 @@ window.addEventListener("DOMContentLoaded", () => {
     console.log("Height: " + window.innerHeight);
     const ctx = canvas.getContext("2d");
     const dvd = new Image();
-    dvd.src = "../src/assets/dvd-logo.png";
+    dvd.src = "../src/assets/dvd-logo.svg";
     dvd.onload = () => {
         function animation(timeStamp) {
+            console.log(hue);
             let deltaTime = timeStamp - oldTimeStamp;
             oldTimeStamp = timeStamp;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -23,6 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
             dy = dy + speedY * deltaTime;
             //Calculating movement
             if (dx + dvd.width / dvdSubtract >= canvas.width || dx < 0) {
+                randomizeColor();
                 speedX = speedX * -1;
             }
             if (dx <= 0 && speedX < 0) {
@@ -30,13 +34,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 speedX *= -1;
             }
             if (dy + dvd.height / dvdSubtract >= canvas.height || dy < 0) {
+                randomizeColor();
                 speedY = speedY * -1;
             }
             if (dy <= 0 && speedY < 0) {
                 dy = 0;
                 speedY *= -1;
             }
+            ctx.filter = `hue-rotate(${hue}deg) saturate(1.5)`;
             ctx.drawImage(dvd, dx, dy, dvd.width / dvdSubtract, dvd.height / dvdSubtract);
+            ctx.filter = "none";
             requestAnimationFrame(animation);
         }
         requestAnimationFrame(animation);
@@ -53,6 +60,10 @@ window.addEventListener("DOMContentLoaded", () => {
             oldTimeStamp = performance.now();
         });
     };
+    function randomizeColor() {
+        const rValue = Math.round(Math.random() * 360);
+        hue = rValue;
+    }
 });
 export {};
 //# sourceMappingURL=canvas.js.map
